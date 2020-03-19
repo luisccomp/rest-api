@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser');
 const express = require('express');
+const cors = require('cors');
 // const swagger = require('swagger-node-express');
 // const swaggerUi = require('swagger-ui-express');
 
@@ -18,6 +19,7 @@ class App {
     middlewares() {
         this.express.use(bodyParser.urlencoded({extended: true}));
         this.express.use(bodyParser.json());
+        this.express.use(cors());
         // this.express.use('/api-docs/', swaggerUi.serve, swaggerUi.setup);
         // this.express.use('/api/v1', routes);
     }

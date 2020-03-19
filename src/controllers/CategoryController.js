@@ -1,4 +1,6 @@
 // const { Category } = require('../models/');
+const axios = require('axios');
+
 const Category = require('../models/Category');
 
 
@@ -61,20 +63,54 @@ module.exports = {
     async create(request, response) {
         // return response.status(200).json({message: 'OK'});
         // POST method's parameters come from the body
-        const { description } = request.body;
+        // const { description } = request.body;
 
-        if (!description)
-            return response.status(400).json({
-                message: '"description" field is required!'
-            });
+        // Verifying if user send a valid login token
+        // const token = request.get('auth-token');
+        // const { valid } = await axios.get('http://localhost:3300/api/auth/check');
 
-        const category = await Category.create({ description });
+        // if (!valid)
+        //     return response.status(401).json({
+        //         message: 'Unauthorized request'
+        //     });
+
+        // if (!description)
+        //     return response.status(400).json({
+        //         message: '"description" field is required!'
+        //     });
+
+        // const category = await Category.create({ description });
 
         // Return a status for created resource
-        return response.status(201).json({
-            id: category.id,
-            description: category.description
-        });
+        // return response.status(201).json({
+        //     id: category.id,
+        //     description: category.description
+        // });
+
+        // console.log(request.headers);
+
+        try {
+            // Sending a request to authentication server and checking if user's
+            // authentication token is valid.
+            let apiResponse = await axios.get('http://localhost:3300/api/auth/check', {
+                headers: {
+                    'auth-token': request.get('auth-token')
+                }
+            });
+
+            
+
+            return response.json({
+                message: 'created'
+            });
+        }
+        catch (error) {
+            console.log('Erro:', error);
+
+            return response.status(401).json({
+                message: 'unauthorized'
+            });
+        }
     },
 
     /**

@@ -26,12 +26,24 @@ const database = require('./database');
 const port = process.env.PORT || 3000;
 
 // Testing database connection
-database.authenticate()
-    .then(() => console.log('Database connected'))
-    .catch(err => console.log('Error:', err));
+// database.authenticate()
+//     .then(() => console.log('Database connected'))
+//     .catch(err => console.log('Error:', err));
 
 
 // Start listening for requests at a given port...
-app.listen(port, () => {
-    console.log(`Server running at port ${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`Server running at port ${port}`);
+// });
+
+// Testing database connection
+database.authenticate()
+    .then(() => {
+        console.log('Database connected...');
+
+        // Start listening for requests at a given port...
+        app.listen(port, () => {
+            console.log(`Server running at port ${port}`);
+        });
+    })
+    .catch(err => console.log('Error:', err));
